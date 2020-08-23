@@ -7,14 +7,16 @@ import numpy as np
 
 #default values
 symbol = "BTC-USD"
+period = '5y'
+nation = ''
 save = False
-
 
 
 #args
 all_arguments = sys.argv[1:]
-s_options = 'hs:k:f'
-l_options = ['help', 'symbol', 'keyword', 'savefile']
+s_options = 'hs:k:fp:n:'
+l_options = ['help', 'symbol', 'keyword', 'savefile', 'period', 'nation']
+
 
 try:
     arguments, values = getopt.getopt(all_arguments, s_options, l_options)
@@ -22,13 +24,16 @@ except getopt.error as err:
     print(str(err))
     sys.exit(2)
 
+
 for argument, value in arguments:
     if argument in ('-h', '--help'):
         print('''
         -h, --help : show this message
         -s, --symbol : set symbol  
         -k, --keywords : set GTrends keyword (default = "Company Name")
-        -f, --filename : save image (default = "Symbol.png")
+        -f, --savefile : save image (default = "Symbol.png")
+        -p, --period : '1d', '1mo', '3mo', '1y', '5y' (default = "5y")
+        -n, --nation : set GTrends nation 'US', 'IT', 'SR'...., 'ZW (default = all)
 
 
 
@@ -44,29 +49,52 @@ for argument, value in arguments:
     elif argument in ('-f', '--savefile'):
         path = f'./img/{symbol}_{keyword}.png'
         save = True
+    elif argument in ('-p', '--period'):
+        if value in tr.timeframes:
+            period = value
+        else:
+            print('period should be one of these values: \n'+ str([key for key in tr.timeframes]))
+            sys.exit(2)
+    elif argument in ('-n', '--nation'):
+        if value in tr.nations:
+            nation = value.upper()
+        else:
+            print('nation should be one of these values \n'+ str([key for key in tr.nations]))
+            sys.exit(2)
+
 
 #yahoo data
-y_data = yd.yahooData(symbol)
+y_data = yd.yahooData(symbol, period)
 normalized_prices = y_data[0]
 short_name = y_data[1]
 
-#trends data
-if keyword == '':
-    keyword = short_name
-trend = tr.Trends([keyword])
 
+#trends data
+if keyword == None:
+    keyword = short_name
+trend = tr.Trends([keyword], period, nation)
 
 
 #plot
 plt.title(short_name)
 plt.plot(normalized_prices, label = f'{symbol} price')
-plt.plot(np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend)), trend, label=f'{keyword} searches')
+y = np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend))
+try:
+    plt.plot(y, trend, label=f'{keyword} searches')
+except ValueError:
+    diff = len(y)-len(trend)
+    for x in range(diff):
+        y = np.delete(y, -1)
+    plt.plot(y, trend, label=f'{keyword} searches')
+
 plt.legend()
+
 
 #save image
 if save: 
     plt.savefig(path)  
     
+
 plt.show()
 
 
