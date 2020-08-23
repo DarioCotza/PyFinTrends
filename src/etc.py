@@ -7,11 +7,10 @@ def normalize(values):
 
 
 def saveimg(os, plt, save, filename, symbol):
-    if save:
-        path = f'./img/{symbol}/'
-        if os.path.exists(path):
-            plt.savefig(path+filename, format='png', dpi=500)
-        else:
-            os.mkdir(path)
-            plt.savefig(path+filename, format='png', dpi=500)
+    path = f'./img/{symbol}/'
+    if os.path.exists(path):
+        plt.savefig(path+filename, format='png', dpi=500)
+    else:
+        os.mkdir(path)
+        plt.savefig(path+filename, format='png', dpi=500)
         

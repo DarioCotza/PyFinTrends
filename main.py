@@ -93,8 +93,8 @@ plt.legend()
 plt.fill_between(x, trend, color = 'lawngreen', alpha = .1)
 plt.fill_between(np.arange(0, len(normalized_prices), 1) ,normalized_prices, color = 'white')
 
-
-etc.saveimg(os, plt, save, filename, symbol)
+if save:
+    etc.saveimg(os, plt, save, filename, symbol)
 plt.show()
 
 
