@@ -32,7 +32,7 @@ for argument, value in arguments:
         -h, --help : show this message
         -s, --symbol : set symbol  
         -k, --keywords : set GTrends keyword (default = "Company Name")
-        -f, --savefile : save image (default = "'symbol' + 'keyword.png")
+        -f, --savefile : save image
         -p, --period : '1d', '1mo', '3mo', '1y', '5y' (default = "5y")
         -n, --nation : set GTrends nation 'US', 'IT', 'SR'...., 'ZW (default = all)
 
