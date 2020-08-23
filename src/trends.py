@@ -6,7 +6,7 @@ nations = ["AD","AE","AG","AI","AL","AM","AN","AO","AR","AS","AT","AU","AW","AZ"
 
 def Trends(kw_list, period, nation):
     pytrends = TrendReq(hl='en-US', tz=360)
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframes[period], geo=nation, gprop='news')
+    pytrends.build_payload(kw_list, cat=0, timeframe=timeframes[period], geo=nation, gprop='')
     trend_values = pytrends.interest_over_time()[kw_list[0]]
 
     return etc.Normalize(trend_values)
