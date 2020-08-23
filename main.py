@@ -7,15 +7,14 @@ import numpy as np
 
 #default values
 symbol = "BTC-USD"
-keyword = ''
 save = False
-path = f'{symbol} {keyword}.png'
+
 
 
 #args
 all_arguments = sys.argv[1:]
 s_options = 'hs:k:f'
-l_options = ['help', 'symbol', 'keyword', 'filename']
+l_options = ['help', 'symbol', 'keyword', 'savefile']
 
 try:
     arguments, values = getopt.getopt(all_arguments, s_options, l_options)
@@ -29,22 +28,21 @@ for argument, value in arguments:
         -h, --help : show this message
         -s, --symbol : set symbol  
         -k, --keywords : set GTrends keyword (default = "Company Name")
-        -f, --filename : save image ()
+        -f, --filename : save image (default = "Symbol.png")
 
 
 
-        Es. "python main.py -s TSLA -k 'Tesla' "
+        Es. "python main.py -s TSLA -k 'Tesla' " : plot data
 
-        Es. "python main.py -s BTC-USD -k 'Bitcoin' -f '/img/file_name.png' "
+        Es. "python main.py -s BTC-USD -k 'Bitcoin' -f " : create /img/BTC-USD_Bitcoin.png
 
         ''')
     elif argument in ('-s', '--symbol'):
         symbol = value.upper()
     elif argument in ('-k', '--keyword'):
         keyword = value
-    elif argument in ('-f', '--filename'):
-        if value != '':
-            path = value
+    elif argument in ('-f', '--savefile'):
+        path = f'./img/{symbol}_{keyword}.png'
         save = True
 
 #yahoo data
@@ -66,8 +64,9 @@ plt.plot(np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend))
 plt.legend()
 
 #save image
-if save:
-    plt.savefig(path)
+if save: 
+    plt.savefig(path)  
+    
 plt.show()
 
 
