@@ -31,7 +31,7 @@ for argument, value in arguments:
         -h, --help : show this message
         -s, --symbol : set symbol  
         -k, --keywords : set GTrends keyword (default = "Company Name")
-        -f, --savefile : save image (default = "Symbol.png")
+        -f, --savefile : save image (default = "'symbol' + 'keyword.png")
         -p, --period : '1d', '1mo', '3mo', '1y', '5y' (default = "5y")
         -n, --nation : set GTrends nation 'US', 'IT', 'SR'...., 'ZW (default = all)
 
@@ -78,15 +78,17 @@ trend = tr.trends([keyword], period, nation)
 #plot
 plt.title(short_name)
 plt.plot(normalized_prices, label = f'{symbol} price')
-y = np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend))
+x = np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend))
 try:
-    plt.plot(y, trend, label=f'{keyword} searches')
+    plt.plot(x, trend, label=f'{keyword} searches')
 except ValueError:
-    diff = len(y)-len(trend)
-    for x in range(diff):
-        y = np.delete(y, -1)
-    plt.plot(y, trend, label=f'{keyword} searches')
+    diff = len(x)-len(trend)
+    for i in range(diff):
+        x = np.delete(i, -1)
+    plt.plot(x, trend, label=f'{keyword} searches')
 plt.legend()
+plt.fill_between(x, trend, color = 'lawngreen', alpha = .1)
+plt.fill_between(np.arange(0, len(normalized_prices), 1) ,normalized_prices, color = 'white')
 
 
 #save image
