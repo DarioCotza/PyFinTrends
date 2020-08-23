@@ -4,3 +4,14 @@ def normalize(values):
     v_range = v_max-v_min
     normalized_df = [(el-v_min)/v_range*100 for el in values]
     return normalized_df
+
+
+def saveimg(os, plt, save, filename, symbol):
+    if save:
+        path = f'./img/{symbol}/'
+        if os.path.exists(path):
+            plt.savefig(path+filename, format='png', dpi=500)
+        else:
+            os.mkdir(path)
+            plt.savefig(path+filename, format='png', dpi=500)
+        

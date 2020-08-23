@@ -1,8 +1,9 @@
-import sys, getopt
+import sys, getopt, os
 from matplotlib import pyplot as plt
 import src.yahoo_data as yd
 import src.trends as tr
 import numpy as np
+import src.etc as etc
 
 
 #default values
@@ -47,7 +48,7 @@ for argument, value in arguments:
     elif argument in ('-k', '--keyword'):
         keyword = value
     elif argument in ('-f', '--savefile'):
-        path = f'./img/{symbol}_{keyword}.png'
+        filename = f'{symbol}_{keyword}_{period}.png'
         save = True
     elif argument in ('-p', '--period'):
         if value in tr.timeframes:
@@ -93,11 +94,7 @@ plt.fill_between(x, trend, color = 'lawngreen', alpha = .1)
 plt.fill_between(np.arange(0, len(normalized_prices), 1) ,normalized_prices, color = 'white')
 
 
-#save image
-if save: 
-    plt.savefig(path)  
-    
-
+etc.saveimg(os, plt, save, filename, symbol)
 plt.show()
 
 
