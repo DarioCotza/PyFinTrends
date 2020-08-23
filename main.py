@@ -64,7 +64,7 @@ for argument, value in arguments:
 
 
 #yahoo data
-y_data = yd.yahooData(symbol, period)
+y_data = yd.yahoo_data(symbol, period)
 normalized_prices = y_data[0]
 short_name = y_data[1]
 
@@ -72,7 +72,7 @@ short_name = y_data[1]
 #trends data
 if keyword == None:
     keyword = short_name
-trend = tr.Trends([keyword], period, nation)
+trend = tr.trends([keyword], period, nation)
 
 
 #plot
@@ -86,7 +86,6 @@ except ValueError:
     for x in range(diff):
         y = np.delete(y, -1)
     plt.plot(y, trend, label=f'{keyword} searches')
-
 plt.legend()
 
 

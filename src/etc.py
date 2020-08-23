@@ -1,4 +1,4 @@
-def Normalize(values):
+def normalize(values):
     v_max = values.max()
     v_min = values.min()
     v_range = v_max-v_min
