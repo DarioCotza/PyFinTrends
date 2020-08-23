@@ -1,5 +1,5 @@
 # PyFinTrends
-A tiny program for visualize financial assets prices with Google Trends data for a given symbol and keyword, over a 5 year span
+A tiny program for visualize financial market prices with Google Trends data for a given symbol and keyword
 
 ## Dependencies
 - Numpy
