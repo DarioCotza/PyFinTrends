@@ -28,7 +28,7 @@ or
 ```
 python main.py --symbol "BTC-USD" --keyword "Bitcoin price" --savefile
 ```
-Shows the chart and saves the image to /img as BTC-USD_Bitcoin price.png
+#### Shows the chart and saves the image to /img/BTC-USD/ as BTC-USD_Bitcoin price_5y.png
 ## Options
 - -s, --symbol : set symbol  
 - -k, --keywords : set GTrends keyword (default = "Company Name")
