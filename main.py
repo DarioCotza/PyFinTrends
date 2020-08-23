@@ -84,8 +84,10 @@ try:
 except ValueError:
     diff = len(x)-len(trend)
     for i in range(diff):
-        x = np.delete(i, -1)
+        x = np.delete(x, -1)
     plt.plot(x, trend, label=f'{keyword} searches')
+
+        
 plt.legend()
 plt.fill_between(x, trend, color = 'lawngreen', alpha = .1)
 plt.fill_between(np.arange(0, len(normalized_prices), 1) ,normalized_prices, color = 'white')
