@@ -6,10 +6,10 @@ def normalize(values):
     return normalized_df
 
 
-def saveimg(os, plt, save, filename, symbol):
+def saveimg(os, plt, save, symbol, keyword, period):
     path = f'./img/{symbol}/'
     if os.path.exists(path):
-        plt.savefig(path+filename, format='png', dpi=500)
+        plt.savefig(f'{path}{symbol}_{keyword}_{period}.png', format='png', dpi=500)
     else:
         os.mkdir(path)
         plt.savefig(path+filename, format='png', dpi=500)

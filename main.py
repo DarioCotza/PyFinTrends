@@ -8,6 +8,7 @@ import src.etc as etc
 
 #default values
 symbol = "BTC-USD"
+keyword = ''
 period = '5y'
 nation = ''
 save = False
@@ -48,7 +49,6 @@ for argument, value in arguments:
     elif argument in ('-k', '--keyword'):
         keyword = value
     elif argument in ('-f', '--savefile'):
-        filename = f'{symbol}_{keyword}_{period}.png'
         save = True
     elif argument in ('-p', '--period'):
         if value in tr.timeframes:
@@ -64,38 +64,40 @@ for argument, value in arguments:
             sys.exit(2)
 
 
-#yahoo data
-y_data = yd.yahoo_data(symbol, period)
-normalized_prices = y_data[0]
-short_name = y_data[1]
+if __name__ == '__main__':
+    #yahoo data
+    y_data = yd.yahoo_data(symbol, period)
+    normalized_prices = y_data[0]
+    short_name = y_data[1]
 
 
-#trends data
-if keyword == None:
-    keyword = short_name
-trend = tr.trends([keyword], period, nation)
+    #trends data thread
+    if keyword == '':
+        keyword = short_name
+    trend = tr.trends([keyword], period, nation)
 
 
-#plot
-plt.title(short_name)
-plt.plot(normalized_prices, label = f'{symbol} price')
-x = np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend))
-try:
-    plt.plot(x, trend, label=f'{keyword} searches')
-except ValueError:
-    diff = len(x)-len(trend)
-    for i in range(diff):
-        x = np.delete(x, -1)
-    plt.plot(x, trend, label=f'{keyword} searches')
+    #plot
+    plt.title(short_name)
+    plt.plot(normalized_prices, label = f'{symbol} price')
+    x = np.arange(0, len(normalized_prices), len(normalized_prices)/len(trend))
+    try:
+        plt.plot(x, trend, label=f'{keyword} searches')
+    except ValueError:
+        diff = len(x)-len(trend)
+        for i in range(diff):
+            x = np.delete(x, -1)
+        plt.plot(x, trend, label=f'{keyword} searches')
 
-        
-plt.legend()
-plt.fill_between(x, trend, color = 'lawngreen', alpha = .1)
-plt.fill_between(np.arange(0, len(normalized_prices), 1) ,normalized_prices, color = 'white')
 
-if save:
-    etc.saveimg(os, plt, save, filename, symbol)
-plt.show()
+    plt.legend()
+    plt.fill_between(x, trend, color = 'lawngreen', alpha = .1)
+    plt.fill_between(np.arange(0, len(normalized_prices), 1) ,normalized_prices, color = 'white')
+
+
+    if save:
+        etc.saveimg(os, plt, save, symbol, keyword, period)
+    plt.show()
 
 
 
