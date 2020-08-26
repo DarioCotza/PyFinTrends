@@ -6,7 +6,6 @@ A tiny program for visualize financial market prices with Google Trends data for
 - [PyTrends](https://pypi.org/project/pytrends/)
 - [yfinance](https://pypi.org/project/yfinance/)
 - [Matplotlib](https://pypi.org/project/matplotlib/)
-- Tkinter
 ### Install
 
 ```
