@@ -51,13 +51,13 @@ for argument, value in arguments:
     elif argument in ('-f', '--savefile'):
         save = True
     elif argument in ('-p', '--period'):
-        if value in tr.timeframes:
-            period = value
+        if value.upper() in tr.timeframes:
+            period = value.upper()
         else:
             print('period should be one of these values: \n'+ str([key for key in tr.timeframes]))
             sys.exit(2)
     elif argument in ('-n', '--nation'):
-        if value in tr.nations:
+        if value.upper() in tr.nations:
             nation = value.upper()
         else:
             print('nation should be one of these values \n'+ str([key for key in tr.nations]))
