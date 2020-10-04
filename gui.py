@@ -108,15 +108,30 @@ class MyApp:
             self.fig.clear()
             sbp = self.fig.add_subplot(111)
             sbp.set_title(self.short_name)
-            sbp.plot(self.normalized_prices)
+            #plot prices
+            x = np.arange(0, len(self.normalized_prices), 1)
+            sbp.plot(x, self.normalized_prices, color = "green")
+            #plot prices linear regression
+            lr_normalized_prices = etc.linear_regression(np, x, self.normalized_prices)
+            sbp.plot(lr_normalized_prices[0], color = "green", label = f"Price r = {np.round(lr_normalized_prices[1], 4)}")
+            #plot trends
             x = np.arange(0, len(self.normalized_prices), len(self.normalized_prices)/len(self.trend))
             try:
-                sbp.plot(x, self.trend)
+                sbp.plot(x, self.trend, color = "blue")
             except ValueError:
                 diff = len(x)-len(self.trend)
                 for i in range(diff):
                     x = np.delete(x, -1)
                 sbp.plot(x, self.trend)
+            #plot trends linear regression
+            lr_trend = etc.linear_regression(np, x, self.trend)
+            sbp.plot(x, lr_trend[0], color = "blue", label= f"Trend r = {np.round(lr_trend[1], 4)}")
+            #fill in lightgreen if trend > price
+            sbp.fill_between(x, self.trend, color = 'lawngreen', alpha = .1)
+            sbp.fill_between(np.arange(0, len(self.normalized_prices), 1) ,self.normalized_prices, color = 'white')
+            #show legend
+            sbp.legend()
+            
             self.canvas.draw()
 
 
