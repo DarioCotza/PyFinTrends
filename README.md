@@ -37,6 +37,6 @@ python main.py --symbol "BTC-USD" --keyword "Bitcoin price" --savefile
 - -n, --nation : set GTrends nation 'US', 'IT', 'SR'...., 'ZW (default = all)
 
 ## GUI
-![tsla/tesla](https://github.com/Wonkysouce/img/blob/master/gui.bmp?raw=true "Example")
+![tsla/tesla](https://github.com/Wonkysouce/img/blob/master/gui.PNG?raw=true "Example")
 
 
