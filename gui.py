@@ -46,6 +46,9 @@ class MyApp:
         self.nation_text = tk.Text(win, height=2, width=15)
         self.nation_text.place(rely = .25)
         self.nation_text.insert(tk.END, 'ALL')
+        #indicator checkbuttons
+        self.lr_checkbutton = tk.IntVar()
+        self.linear_regression_checkbutton = tk.Checkbutton(win, text="linear regression", variable=self.lr_checkbutton).place(rely = .30)
         #enter button
         self.enter_button = tk.Button(win, text = "Enter",  height=2, width=15,
          command = lambda: enter(self, trends.nations), bg='green2', bd=0)
@@ -112,8 +115,9 @@ class MyApp:
             x = np.arange(0, len(self.normalized_prices), 1)
             sbp.plot(x, self.normalized_prices, color = "green")
             #plot prices linear regression
-            lr_normalized_prices = etc.linear_regression(np, x, self.normalized_prices)
-            sbp.plot(lr_normalized_prices[0], color = "green", label = f"Price r = {np.round(lr_normalized_prices[1], 4)}")
+            if self.lr_checkbutton.get() == 1:
+                lr_normalized_prices = etc.linear_regression(np, x, self.normalized_prices)
+                sbp.plot(lr_normalized_prices[0], color = "green", label = f"Price r = {np.round(lr_normalized_prices[1], 4)}")
             #plot trends
             x = np.arange(0, len(self.normalized_prices), len(self.normalized_prices)/len(self.trend))
             try:
@@ -124,8 +128,9 @@ class MyApp:
                     x = np.delete(x, -1)
                 sbp.plot(x, self.trend)
             #plot trends linear regression
-            lr_trend = etc.linear_regression(np, x, self.trend)
-            sbp.plot(x, lr_trend[0], color = "blue", label= f"Trend r = {np.round(lr_trend[1], 4)}")
+            if self.lr_checkbutton.get() == 1:
+                lr_trend = etc.linear_regression(np, x, self.trend)
+                sbp.plot(x, lr_trend[0], color = "blue", label= f"Trend r = {np.round(lr_trend[1], 4)}")
             #fill in lightgreen if trend > price
             sbp.fill_between(x, self.trend, color = 'lawngreen', alpha = .1)
             sbp.fill_between(np.arange(0, len(self.normalized_prices), 1) ,self.normalized_prices, color = 'white')
